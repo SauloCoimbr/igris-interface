@@ -1,6 +1,7 @@
 'use client';
 
 import { Dock, DockIcon } from '@/components/magicui/dock';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import {
   Menubar,
@@ -10,6 +11,7 @@ import {
   MenubarShortcut,
   MenubarTrigger,
 } from '@/components/ui/menubar';
+import Link from 'next/link';
 
 export type IconProps = React.HTMLAttributes<SVGElement>;
 
@@ -25,8 +27,14 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-black flex flex-col items-center justify-end pb-4 sm:pb-8 bg-cover bg-center bg-no-repeat">
-      <div className="absolute inset-0 bg-black/50 z-10" />
+    <div className="relative min-h-screen flex flex-col items-center justify-end pb-4 sm:pb-8">
+    <Image
+      src="/assets/igris-interface2.jpg"
+      alt="Background"
+      fill
+      className="object-cover"
+    />
+    <div className="absolute inset-0 bg-black/50 z-10" />
 
       {/* Header atualizado */}
       <header className="fixed top-0 left-0 right-0 z-50 h-6 bg-gray-100/80 backdrop-blur-2xl flex items-center justify-between px-4 border-b border-gray-300/30">
@@ -203,20 +211,24 @@ export default function Home() {
         direction="bottom"
         className="shadow-2xl z-20 px-2 sm:px-4"
       >
+        {' '}
         <DockIcon className="dock-icon">
-          <Icons.gitHub className="size-6 sm:size-8 text-white/90 hover:text-white transition-colors duration-100" />
+          <Link href="https://www.github.com" target="_blank">
+            <Icons.gitHub className="size-6 sm:size-8 text-white/90 hover:text-white transition-colors duration-100" />
+          </Link>
         </DockIcon>
-
         <DockIcon>
           <Icons.googleDrive className="size-6 sm:size-8 text-white/90 hover:text-white transition-colors" />
         </DockIcon>
-
-        <DockIcon>
-          <Icons.notion className="size-6 sm:size-8 text-white/90 hover:text-white transition-colors" />
+        <DockIcon className="dock-icon">
+          <Link href="https://www.notion.so/" target="_blank">
+            <Icons.notion className="size-6 sm:size-8 text-white/90 hover:text-white transition-colors" />
+          </Link>
         </DockIcon>
-
-        <DockIcon>
-          <Icons.whatsapp className="size-6 sm:size-8 text-white/90 hover:text-white transition-colors" />
+        <DockIcon className="dock-icon">
+          <Link href="https://web.whatsapp.com/" target="_blank">
+            <Icons.whatsapp className="size-6 sm:size-8 text-white/90 hover:text-white transition-colors" />
+          </Link>
         </DockIcon>
       </Dock>
     </div>
