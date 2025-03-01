@@ -134,8 +134,6 @@ const DockIcon = ({
     damping: 20, // Reduzido para menos "borrachudo"
   });
 
-  const tapScale = useTransform(scaleSize, s => s * 0.9); // Efeito de pressionar
-
   return (
     <motion.div
       ref={ref}

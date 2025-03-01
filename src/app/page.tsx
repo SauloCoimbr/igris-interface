@@ -7,25 +7,98 @@ export type IconProps = React.HTMLAttributes<SVGElement>;
 
 export default function Home() {
   return (
-    <div className="relative flex min-h-screen items-end justify-center pb-8 bg-gradient-to-b from-neutral-900 to-neutral-800">
-      <Dock 
-        iconMagnification={72} 
+    <div className="relative flex min-h-screen items-end bg-black justify-center pb-8 bg-cover bg-center bg-no-repeat">
+      <header className="fixed top-0 left-0 right-0 z-50 h-6 bg-gray-100/80 backdrop-blur-2xl flex items-center justify-between px-4 border-b border-gray-300/30">
+        {/* Menu esquerdo */}
+        <div className="flex space-x-4 text-[13px] text-gray-900">
+          <span className="px-2 py-0.5 rounded">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-rabbit"
+            >
+              <path d="M13 16a3 3 0 0 1 2.24 5" />
+              <path d="M18 12h.01" />
+              <path d="M18 21h-8a4 4 0 0 1-4-4 7 7 0 0 1 7-7h.2L9.6 6.4a1 1 0 1 1 2.8-2.8L15.8 7h.2c3.3 0 6 2.7 6 6v1a2 2 0 0 1-2 2h-1a3 3 0 0 0-3 3" />
+              <path d="M20 8.54V4a2 2 0 1 0-4 0v3" />
+              <path d="M7.612 12.524a3 3 0 1 0-1.6 4.3" />
+            </svg>
+          </span>
+          <button className="hover:bg-gray-200/50 px-2 py-0.5 rounded">
+            Finder
+          </button>
+          <button className="hover:bg-gray-200/50 px-2 py-0.5 rounded">
+            File
+          </button>
+          <button className="hover:bg-gray-200/50 px-2 py-0.5 rounded">
+            Edit
+          </button>
+          <button className="hover:bg-gray-200/50 px-2 py-0.5 rounded">
+            View
+          </button>
+          <button className="hover:bg-gray-200/50 px-2 py-0.5 rounded">
+            Go
+          </button>
+          <button className="hover:bg-gray-200/50 px-2 py-0.5 rounded">
+            Window
+          </button>
+          <button className="hover:bg-gray-200/50 px-2 py-0.5 rounded">
+            Help
+          </button>
+        </div>
+
+        {/* Status direito */}
+        <div className="flex items-center space-x-4 text-[13px] text-gray-900">
+          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M15.8 8.5c0-.1 0-.2-.1-.3 0 0-1.7-2.6-5.7-2.6-4 0-5.7 2.6-5.7 2.6-.1.1-.1.2-.1.3C4.2 9.4 4 10.2 4 11v3.5c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V11c0-.8-.2-1.6-.2-2.5zM10 6.7c2.9 0 4.3 1.5 4.8 2.1-.5.6-1.9 2.1-4.8 2.1s-4.3-1.5-4.8-2.1c.5-.6 1.9-2.1 4.8-2.1zM16 14.5c0 .6-.4 1-1 1H5c-.6 0-1-.4-1-1V11c0-1.3.3-2.5.3-2.5.1-.2.3-.3.5-.3h10.4c.2 0 .4.1.5.3 0 0 .3 1.2.3 2.5v3.5z" />
+          </svg>
+
+          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M16 18h2V6h-2M12 18h2V6h-2M8 18h2V6H8M4 18h2V6H4" />
+          </svg>
+
+          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M9 5V3H7v2H5v2h2v2h2V7h2V5H9zm-5 6h10v3H4v-3z" />
+          </svg>
+
+          <span>88%</span>
+          <svg className="w-5 h-4" fill="currentColor" viewBox="0 0 16 16">
+            <path
+              fillRule="evenodd"
+              d="M14 14H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM2 2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2z"
+            />
+            <path d="M13 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm0 3a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm0 3a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5z" />
+          </svg>
+
+          <span>Sat 8:42 PM</span>
+        </div>
+      </header>
+
+      <Dock
+        iconMagnification={72}
         iconDistance={120}
         direction="bottom"
         className="shadow-2xl"
       >
-       <DockIcon className="dock-icon">
-  <Icons.gitHub className="size-8 text-white/90 hover:text-white transition-colors duration-100" />
-</DockIcon>
-        
+        <DockIcon className="dock-icon">
+          <Icons.gitHub className="size-8 text-white/90 hover:text-white transition-colors duration-100" />
+        </DockIcon>
+
         <DockIcon>
           <Icons.googleDrive className="size-8 text-white/90 hover:text-white transition-colors" />
         </DockIcon>
-        
+
         <DockIcon>
           <Icons.notion className="size-8 text-white/90 hover:text-white transition-colors" />
         </DockIcon>
-        
+
         <DockIcon>
           <Icons.whatsapp className="size-8 text-white/90 hover:text-white transition-colors" />
         </DockIcon>
@@ -33,6 +106,8 @@ export default function Home() {
     </div>
   );
 }
+
+// ... (mantenha os ícones Icons no final como estão)
 
 const Icons = {
   gitHub: (props: IconProps) => (
@@ -44,13 +119,7 @@ const Icons = {
     </svg>
   ),
   notion: (props: IconProps) => (
-    <svg
-      width="100"
-      height="100"
-      viewBox="0 0 100 100"
-      fill="none"
-      {...props}
-    >
+    <svg width="100" height="100" viewBox="0 0 100 100" fill="none" {...props}>
       <path
         d="M6.017 4.313l55.333 -4.087c6.797 -0.583 8.543 -0.19 12.817 2.917l17.663 12.443c2.913 2.14 3.883 2.723 3.883 5.053v68.243c0 4.277 -1.553 6.807 -6.99 7.193L24.467 99.967c-4.08 0.193 -6.023 -0.39 -8.16 -3.113L3.3 79.94c-2.333 -3.113 -3.3 -5.443 -3.3 -8.167V11.113c0 -3.497 1.553 -6.413 6.017 -6.8z"
         fill="#fff"
@@ -92,28 +161,13 @@ const Icons = {
     </svg>
   ),
   whatsapp: (props: IconProps) => (
-    <svg
-      viewBox="0 0 175.216 175.552"
-      {...props}
-    >
+    <svg viewBox="0 0 175.216 175.552" {...props}>
       <defs>
-        <linearGradient
-          id="b"
-          x1="85.915"
-          x2="86.535"
-          y1="32.567"
-          y2="137.092"
-        >
+        <linearGradient id="b" x1="85.915" x2="86.535" y1="32.567" y2="137.092">
           <stop offset="0" stopColor="#57d163" />
           <stop offset="1" stopColor="#23b33a" />
         </linearGradient>
-        <filter
-          id="a"
-          width="1.115"
-          height="1.114"
-          x="-.057"
-          y="-.057"
-        >
+        <filter id="a" width="1.115" height="1.114" x="-.057" y="-.057">
           <feGaussianBlur stdDeviation="3.531" />
         </filter>
       </defs>
