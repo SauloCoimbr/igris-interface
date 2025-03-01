@@ -1,113 +1,227 @@
 'use client';
 
-import React from 'react';
 import { Dock, DockIcon } from '@/components/magicui/dock';
+import { useEffect, useState } from 'react';
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarShortcut,
+  MenubarTrigger,
+} from '@/components/ui/menubar';
 
 export type IconProps = React.HTMLAttributes<SVGElement>;
 
 export default function Home() {
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
-    <div className="relative flex min-h-screen items-end bg-black justify-center pb-8 bg-cover bg-center bg-no-repeat">
+    <div className="relative min-h-screen bg-black flex flex-col items-center justify-end pb-4 sm:pb-8 bg-cover bg-center bg-no-repeat">
+      <div className="absolute inset-0 bg-black/50 z-10" />
+
+      {/* Header atualizado */}
       <header className="fixed top-0 left-0 right-0 z-50 h-6 bg-gray-100/80 backdrop-blur-2xl flex items-center justify-between px-4 border-b border-gray-300/30">
-        {/* Menu esquerdo */}
-        <div className="flex space-x-4 text-[13px] text-gray-900">
-          <span className="px-2 py-0.5 rounded">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="lucide lucide-rabbit"
-            >
-              <path d="M13 16a3 3 0 0 1 2.24 5" />
-              <path d="M18 12h.01" />
-              <path d="M18 21h-8a4 4 0 0 1-4-4 7 7 0 0 1 7-7h.2L9.6 6.4a1 1 0 1 1 2.8-2.8L15.8 7h.2c3.3 0 6 2.7 6 6v1a2 2 0 0 1-2 2h-1a3 3 0 0 0-3 3" />
-              <path d="M20 8.54V4a2 2 0 1 0-4 0v3" />
-              <path d="M7.612 12.524a3 3 0 1 0-1.6 4.3" />
-            </svg>
-          </span>
-          <button className="hover:bg-gray-200/50 px-2 py-0.5 rounded">
-            Finder
-          </button>
-          <button className="hover:bg-gray-200/50 px-2 py-0.5 rounded">
-            File
-          </button>
-          <button className="hover:bg-gray-200/50 px-2 py-0.5 rounded">
-            Edit
-          </button>
-          <button className="hover:bg-gray-200/50 px-2 py-0.5 rounded">
-            View
-          </button>
-          <button className="hover:bg-gray-200/50 px-2 py-0.5 rounded">
-            Go
-          </button>
-          <button className="hover:bg-gray-200/50 px-2 py-0.5 rounded">
-            Window
-          </button>
-          <button className="hover:bg-gray-200/50 px-2 py-0.5 rounded">
-            Help
-          </button>
+        {/* Menu Esquerdo */}
+        <div className="flex items-center space-x-4 text-[13px] text-gray-900">
+          {/* Menu Principal */}
+          <Menubar className="border-none bg-transparent">
+            {/* Menu Apple */}
+            <MenubarMenu>
+              <MenubarTrigger className="cursor-default text-[13px] h-6 px-2 py-0.5 rounded data-[state=open]:bg-gray-200/50 hover:bg-gray-200/50">
+                
+              </MenubarTrigger>
+              <MenubarContent className="min-w-[180px] bg-white/90 backdrop-blur-2xl border border-gray-300/30 rounded-md mt-1">
+                <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                  New Window <MenubarShortcut>⌘N</MenubarShortcut>
+                </MenubarItem>
+                <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                  Open...
+                </MenubarItem>
+                <div className="border-t border-gray-300/30 my-1" />
+                <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                  Close Window <MenubarShortcut>⌘W</MenubarShortcut>
+                </MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+
+            {/* Menus Dinâmicos */}
+            {['Finder', 'File', 'Edit', 'View', 'Go', 'Window', 'Help'].map(
+              item => (
+                <MenubarMenu key={item}>
+                  <MenubarTrigger className="cursor-default text-[13px] h-6 px-2 py-0.5 rounded data-[state=open]:bg-gray-200/50 hover:bg-gray-200/50">
+                    {item}
+                  </MenubarTrigger>
+
+                  {/* Adicione o conteúdo específico para cada menu */}
+                  <MenubarContent
+                    className="min-w-[180px] bg-white/90 backdrop-blur-2xl border border-gray-300/30 rounded-md mt-1"
+                    align="start"
+                  >
+                    {/* Exemplo para o menu File */}
+                    {item === 'File' && (
+                      <>
+                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                          New Window <MenubarShortcut>⌘N</MenubarShortcut>
+                        </MenubarItem>
+                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                          Open...
+                        </MenubarItem>
+                        <div className="border-t border-gray-300/30 my-1" />
+                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                          Close Window <MenubarShortcut>⌘W</MenubarShortcut>
+                        </MenubarItem>
+                      </>
+                    )}
+
+                    {/* Exemplo para o menu File */}
+                    {item === 'Finder' && (
+                      <>
+                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                          New Window <MenubarShortcut>⌘N</MenubarShortcut>
+                        </MenubarItem>
+                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                          Open...
+                        </MenubarItem>
+                        <div className="border-t border-gray-300/30 my-1" />
+                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                          Close Window <MenubarShortcut>⌘W</MenubarShortcut>
+                        </MenubarItem>
+                      </>
+                    )}
+
+                    {/* Exemplo para o menu File */}
+                    {item === 'View' && (
+                      <>
+                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                          New Window <MenubarShortcut>⌘N</MenubarShortcut>
+                        </MenubarItem>
+                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                          Open...
+                        </MenubarItem>
+                        <div className="border-t border-gray-300/30 my-1" />
+                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                          Close Window <MenubarShortcut>⌘W</MenubarShortcut>
+                        </MenubarItem>
+                      </>
+                    )}
+
+                    {/* Exemplo para o menu File */}
+                    {item === 'Go' && (
+                      <>
+                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                          New Window <MenubarShortcut>⌘N</MenubarShortcut>
+                        </MenubarItem>
+                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                          Open...
+                        </MenubarItem>
+                        <div className="border-t border-gray-300/30 my-1" />
+                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                          Close Window <MenubarShortcut>⌘W</MenubarShortcut>
+                        </MenubarItem>
+                      </>
+                    )}
+
+                    {/* Exemplo para o menu File */}
+                    {item === 'Window' && (
+                      <>
+                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                          New Window <MenubarShortcut>⌘N</MenubarShortcut>
+                        </MenubarItem>
+                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                          Open...
+                        </MenubarItem>
+                        <div className="border-t border-gray-300/30 my-1" />
+                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                          Close Window <MenubarShortcut>⌘W</MenubarShortcut>
+                        </MenubarItem>
+                      </>
+                    )}
+
+                    {/* Exemplo para o menu File */}
+                    {item === 'Help' && (
+                      <>
+                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                          New Window <MenubarShortcut>⌘N</MenubarShortcut>
+                        </MenubarItem>
+                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                          Open...
+                        </MenubarItem>
+                        <div className="border-t border-gray-300/30 my-1" />
+                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                          Close Window <MenubarShortcut>⌘W</MenubarShortcut>
+                        </MenubarItem>
+                      </>
+                    )}
+
+                    {/* Exemplo para o menu Edit */}
+                    {item === 'Edit' && (
+                      <>
+                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                          Undo <MenubarShortcut>⌘Z</MenubarShortcut>
+                        </MenubarItem>
+                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                          Redo <MenubarShortcut>⇧⌘Z</MenubarShortcut>
+                        </MenubarItem>
+                      </>
+                    )}
+
+                    {/* Adicione conteúdo para outros menus conforme necessário */}
+                  </MenubarContent>
+                </MenubarMenu>
+              ),
+            )}
+          </Menubar>
         </div>
 
-        {/* Status direito */}
+        {/* Restante do header... */}
+        {/* Hora */}
         <div className="flex items-center space-x-4 text-[13px] text-gray-900">
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M15.8 8.5c0-.1 0-.2-.1-.3 0 0-1.7-2.6-5.7-2.6-4 0-5.7 2.6-5.7 2.6-.1.1-.1.2-.1.3C4.2 9.4 4 10.2 4 11v3.5c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V11c0-.8-.2-1.6-.2-2.5zM10 6.7c2.9 0 4.3 1.5 4.8 2.1-.5.6-1.9 2.1-4.8 2.1s-4.3-1.5-4.8-2.1c.5-.6 1.9-2.1 4.8-2.1zM16 14.5c0 .6-.4 1-1 1H5c-.6 0-1-.4-1-1V11c0-1.3.3-2.5.3-2.5.1-.2.3-.3.5-.3h10.4c.2 0 .4.1.5.3 0 0 .3 1.2.3 2.5v3.5z" />
-          </svg>
-
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M16 18h2V6h-2M12 18h2V6h-2M8 18h2V6H8M4 18h2V6H4" />
-          </svg>
-
-          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M9 5V3H7v2H5v2h2v2h2V7h2V5H9zm-5 6h10v3H4v-3z" />
-          </svg>
-
-          <span>88%</span>
-          <svg className="w-5 h-4" fill="currentColor" viewBox="0 0 16 16">
-            <path
-              fillRule="evenodd"
-              d="M14 14H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM2 2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2z"
-            />
-            <path d="M13 5.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm0 3a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5zm0 3a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 .5-.5z" />
-          </svg>
-
-          <span>Sat 8:42 PM</span>
+          <span className="whitespace-nowrap">
+            {currentTime.toLocaleDateString('en-US', { weekday: 'short' })}{' '}
+            {currentTime.toLocaleTimeString('en-US', {
+              hour: 'numeric',
+              minute: '2-digit',
+              hour12: true,
+            })}
+          </span>
         </div>
       </header>
 
+      {/* Dock */}
       <Dock
         iconMagnification={72}
         iconDistance={120}
         direction="bottom"
-        className="shadow-2xl"
+        className="shadow-2xl z-20 px-2 sm:px-4"
       >
         <DockIcon className="dock-icon">
-          <Icons.gitHub className="size-8 text-white/90 hover:text-white transition-colors duration-100" />
+          <Icons.gitHub className="size-6 sm:size-8 text-white/90 hover:text-white transition-colors duration-100" />
         </DockIcon>
 
         <DockIcon>
-          <Icons.googleDrive className="size-8 text-white/90 hover:text-white transition-colors" />
+          <Icons.googleDrive className="size-6 sm:size-8 text-white/90 hover:text-white transition-colors" />
         </DockIcon>
 
         <DockIcon>
-          <Icons.notion className="size-8 text-white/90 hover:text-white transition-colors" />
+          <Icons.notion className="size-6 sm:size-8 text-white/90 hover:text-white transition-colors" />
         </DockIcon>
 
         <DockIcon>
-          <Icons.whatsapp className="size-8 text-white/90 hover:text-white transition-colors" />
+          <Icons.whatsapp className="size-6 sm:size-8 text-white/90 hover:text-white transition-colors" />
         </DockIcon>
       </Dock>
     </div>
   );
 }
-
-// ... (mantenha os ícones Icons no final como estão)
 
 const Icons = {
   gitHub: (props: IconProps) => (

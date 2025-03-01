@@ -9,18 +9,49 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Garantir alinhamento correto dos menus */
+[data-radix-menubar-content] {
+  transform: none !important;
+  margin-top: 4px !important;
+  z-index: 9999;
+}
+
+/* Animações suaves */
+[data-radix-menubar-content] {
+  animation: scaleIn 0.1s ease-out;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Estilo dos atalhos */
+.menubar-shortcut {
+  margin-left: auto;
+  letter-spacing: -0.5px;
+  color: #666;
+}
+
 @layer components {
   .dock-icon {
     transform: translateZ(0);
     backface-visibility: hidden;
     will-change: transform;
   }
-  
-  .dock-icon > svg {
+
+  .dock-icon>svg {
     transition: transform 0.1s ease;
   }
-  
-  .dock-icon:active > svg {
+
+  .dock-icon:active>svg {
     transform: scale(0.9);
   }
 }
@@ -139,6 +170,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
