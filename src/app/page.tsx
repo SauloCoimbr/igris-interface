@@ -36,24 +36,24 @@ export default function Home() {
       />
 
       {/* Header atualizado */}
-      <header className="fixed top-0 left-0 right-0 z-50 h-6 bg-gray-100/80 backdrop-blur-2xl flex items-center justify-between px-4 border-b border-gray-300/30">
+      <header className="fixed top-0 left-0 right-0 z-50 h-12 bg-gray-100/10 text-white  backdrop-blur-2xl flex items-center justify-between px-4 border-b border-gray-300/30">
         {/* Menu Esquerdo */}
-        <div className="flex items-center space-x-4 text-[13px] text-gray-900">
+        <div className="flex items-center space-x-4 text-[11px] sm:text-[18px] text-white">
           {/* Menu Principal */}
-          <Menubar className="border-none bg-transparent">
+          <Menubar className="border-none bg-transparent text-white">
             <MenubarMenu>
-              <MenubarTrigger className="cursor-default text-[13px] h-6 px-2 py-0.5 rounded data-[state=open]:bg-gray-200/50 hover:bg-gray-200/50">
+              <MenubarTrigger className="cursor-default text-[11px] sm:text-[18px] h-6 px-2 py-0.5 rounded data-[state=open]:bg-gray-200/50 hover:bg-gray-200/50">
                 
               </MenubarTrigger>
               <MenubarContent className="min-w-[180px] bg-white/20 text-white backdrop-blur-2xl border border-gray-300/30 rounded-md mt-1">
-                <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
                   New Window <MenubarShortcut>⌘N</MenubarShortcut>
                 </MenubarItem>
-                <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
                   Open...
                 </MenubarItem>
                 <div className="border-t border-gray-300/30 my-1" />
-                <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
                   Close Window <MenubarShortcut>⌘W</MenubarShortcut>
                 </MenubarItem>
               </MenubarContent>
@@ -63,7 +63,7 @@ export default function Home() {
             {['Finder', 'File', 'Edit', 'View', 'Go', 'Window', 'Help'].map(
               item => (
                 <MenubarMenu key={item}>
-                  <MenubarTrigger className="cursor-default text-[13px] h-6 px-2 py-0.5 rounded data-[state=open]:bg-gray-200/50 hover:bg-gray-200/50">
+                  <MenubarTrigger className="cursor-default text-[11px] sm:text-[18px] h-6 px-2 py-0.5 rounded data-[state=open]:bg-gray-200/50 hover:bg-gray-200/50">
                     {item}
                   </MenubarTrigger>
 
@@ -75,14 +75,14 @@ export default function Home() {
                     {/* Exemplo para o menu File */}
                     {item === 'File' && (
                       <>
-                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
                           New Window <MenubarShortcut>⌘N</MenubarShortcut>
                         </MenubarItem>
-                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
                           Open...
                         </MenubarItem>
                         <div className="border-t border-gray-300/30 my-1" />
-                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
                           Close Window <MenubarShortcut>⌘W</MenubarShortcut>
                         </MenubarItem>
                       </>
@@ -91,14 +91,14 @@ export default function Home() {
                     {/* Exemplo para o menu File */}
                     {item === 'Finder' && (
                       <>
-                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
                           New Window <MenubarShortcut>⌘N</MenubarShortcut>
                         </MenubarItem>
-                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
                           Open...
                         </MenubarItem>
                         <div className="border-t border-gray-300/30 my-1" />
-                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
                           Close Window <MenubarShortcut>⌘W</MenubarShortcut>
                         </MenubarItem>
                       </>
@@ -107,14 +107,14 @@ export default function Home() {
                     {/* Exemplo para o menu File */}
                     {item === 'View' && (
                       <>
-                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
                           New Window <MenubarShortcut>⌘N</MenubarShortcut>
                         </MenubarItem>
-                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
                           Open...
                         </MenubarItem>
                         <div className="border-t border-gray-300/30 my-1" />
-                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
                           Close Window <MenubarShortcut>⌘W</MenubarShortcut>
                         </MenubarItem>
                       </>
@@ -123,14 +123,14 @@ export default function Home() {
                     {/* Exemplo para o menu File */}
                     {item === 'Go' && (
                       <>
-                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
                           New Window <MenubarShortcut>⌘N</MenubarShortcut>
                         </MenubarItem>
-                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
                           Open...
                         </MenubarItem>
                         <div className="border-t border-gray-300/30 my-1" />
-                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
                           Close Window <MenubarShortcut>⌘W</MenubarShortcut>
                         </MenubarItem>
                       </>
@@ -139,14 +139,14 @@ export default function Home() {
                     {/* Exemplo para o menu File */}
                     {item === 'Window' && (
                       <>
-                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
                           New Window <MenubarShortcut>⌘N</MenubarShortcut>
                         </MenubarItem>
-                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
                           Open...
                         </MenubarItem>
                         <div className="border-t border-gray-300/30 my-1" />
-                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
                           Close Window <MenubarShortcut>⌘W</MenubarShortcut>
                         </MenubarItem>
                       </>
@@ -155,14 +155,14 @@ export default function Home() {
                     {/* Exemplo para o menu File */}
                     {item === 'Help' && (
                       <>
-                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
                           New Window <MenubarShortcut>⌘N</MenubarShortcut>
                         </MenubarItem>
-                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
                           Open...
                         </MenubarItem>
                         <div className="border-t border-gray-300/30 my-1" />
-                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
                           Close Window <MenubarShortcut>⌘W</MenubarShortcut>
                         </MenubarItem>
                       </>
@@ -171,10 +171,10 @@ export default function Home() {
                     {/* Exemplo para o menu Edit */}
                     {item === 'Edit' && (
                       <>
-                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
                           Undo <MenubarShortcut>⌘Z</MenubarShortcut>
                         </MenubarItem>
-                        <MenubarItem className="text-[13px] h-7 focus:bg-gray-200/50">
+                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
                           Redo <MenubarShortcut>⇧⌘Z</MenubarShortcut>
                         </MenubarItem>
                       </>
@@ -190,7 +190,7 @@ export default function Home() {
 
         {/* Restante do header... */}
         {/* Hora */}
-        <div className="flex items-center space-x-4 text-[13px] text-gray-900">
+        <div className="flex items-center space-x-4 text-[11px] sm:text-[18px] text-white">
           <span className="whitespace-nowrap">
             {currentTime.toLocaleDateString('en-US', { weekday: 'short' })}{' '}
             {currentTime.toLocaleTimeString('en-US', {
@@ -220,8 +220,10 @@ export default function Home() {
             <Icons.youtube className="size-6 sm:size-8 text-white/90 hover:text-white transition-colors" />
           </Link>
         </DockIcon>
-        <DockIcon>
-          <Icons.googleDrive className="size-6 sm:size-8 text-white/90 hover:text-white transition-colors" />
+        <DockIcon className="dock-icon">
+          <Link href="https://drive.google.com/" target="_blank">
+            <Icons.googleDrive className="size-6 sm:size-8 text-white/90 hover:text-white transition-colors" />
+          </Link>
         </DockIcon>
         <DockIcon className="dock-icon">
           <Link href="https://www.notion.so/" target="_blank">
