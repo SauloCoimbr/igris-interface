@@ -190,7 +190,7 @@ export default function Home() {
 
         {/* Restante do header... */}
         {/* Hora */}
-        <div className="flex items-center space-x-4 text-[11px] sm:text-[18px] text-white">
+        <div className="hidden sm:flex items-center space-x-4 text-[11px] sm:text-[18px] text-white">
           <span className="whitespace-nowrap">
             {currentTime.toLocaleDateString('en-US', { weekday: 'short' })}{' '}
             {currentTime.toLocaleTimeString('en-US', {
