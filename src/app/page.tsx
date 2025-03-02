@@ -1,8 +1,9 @@
 'use client';
 
-import { Dock, DockIcon } from '@/components/magicui/dock';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { Rnd } from 'react-rnd';
+import { Dock, DockIcon } from '@/components/magicui/dock';
 import {
   Menubar,
   MenubarContent,
@@ -11,20 +12,34 @@ import {
   MenubarShortcut,
   MenubarTrigger,
 } from '@/components/ui/menubar';
-import Link from 'next/link';
 
 export type IconProps = React.HTMLAttributes<SVGElement>;
 
+// Tipo para a janela aberta (com um id único)
+interface WindowData {
+  url: string;
+  key: string;
+}
+
 export default function Home() {
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [openWindows, setOpenWindows] = useState<WindowData[]>([]);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
-
     return () => clearInterval(timer);
   }, []);
+
+  // Abre uma nova janela com um key único
+  const openSite = (url: string) => {
+    setOpenWindows([...openWindows, { url, key: `${url}-${Date.now()}` }]);
+  };
+
+  const closeWindow = (key: string) => {
+    setOpenWindows(openWindows.filter(win => win.key !== key));
+  };
 
   return (
     <div className="relative h-screen flex flex-col items-center justify-end pb-4 sm:pb-8">
@@ -35,11 +50,9 @@ export default function Home() {
         className="object-cover"
       />
 
-      {/* Header atualizado */}
-      <header className="fixed top-0 left-0 right-0 z-50 h-12 bg-gray-100/10 text-white  backdrop-blur-2xl flex items-center justify-between px-4 border-b border-gray-300/30">
-        {/* Menu Esquerdo */}
-        <div className="flex items-center space-x-4 text-[11px] sm:text-[18px] text-white">
-          {/* Menu Principal */}
+      {/* Header com Menu e Hora */}
+      <header className="fixed top-0 left-0 right-0 z-50 h-12 bg-gray-100/10 text-white backdrop-blur-2xl flex items-center justify-between px-4 border-b border-gray-300/30">
+        <div className="flex items-center space-x-4 text-[11px] sm:text-[18px]">
           <Menubar className="border-none bg-transparent text-white">
             <MenubarMenu>
               <MenubarTrigger className="cursor-default text-[11px] sm:text-[18px] h-6 px-2 py-0.5 rounded data-[state=open]:bg-gray-200/50 hover:bg-gray-200/50">
@@ -58,138 +71,114 @@ export default function Home() {
                 </MenubarItem>
               </MenubarContent>
             </MenubarMenu>
-
-            {/* Menus Dinâmicos */}
-            {['Finder', 'File', 'Edit', 'View', 'Go', 'Window', 'Help'].map(
-              item => (
-                <MenubarMenu key={item}>
-                  <MenubarTrigger className="cursor-default text-[11px] sm:text-[18px] h-6 px-2 py-0.5 rounded data-[state=open]:bg-gray-200/50 hover:bg-gray-200/50">
-                    {item}
-                  </MenubarTrigger>
-
-                  {/* Adicione o conteúdo específico para cada menu */}
-                  <MenubarContent
-                    className="min-w-[180px] bg-white/20 text-white backdrop-blur-2xl border border-gray-300/30 rounded-md mt-1"
-                    align="start"
-                  >
-                    {/* Exemplo para o menu File */}
-                    {item === 'File' && (
-                      <>
-                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
-                          New Window <MenubarShortcut>⌘N</MenubarShortcut>
-                        </MenubarItem>
-                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
-                          Open...
-                        </MenubarItem>
-                        <div className="border-t border-gray-300/30 my-1" />
-                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
-                          Close Window <MenubarShortcut>⌘W</MenubarShortcut>
-                        </MenubarItem>
-                      </>
-                    )}
-
-                    {/* Exemplo para o menu File */}
-                    {item === 'Finder' && (
-                      <>
-                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
-                          New Window <MenubarShortcut>⌘N</MenubarShortcut>
-                        </MenubarItem>
-                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
-                          Open...
-                        </MenubarItem>
-                        <div className="border-t border-gray-300/30 my-1" />
-                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
-                          Close Window <MenubarShortcut>⌘W</MenubarShortcut>
-                        </MenubarItem>
-                      </>
-                    )}
-
-                    {/* Exemplo para o menu File */}
-                    {item === 'View' && (
-                      <>
-                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
-                          New Window <MenubarShortcut>⌘N</MenubarShortcut>
-                        </MenubarItem>
-                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
-                          Open...
-                        </MenubarItem>
-                        <div className="border-t border-gray-300/30 my-1" />
-                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
-                          Close Window <MenubarShortcut>⌘W</MenubarShortcut>
-                        </MenubarItem>
-                      </>
-                    )}
-
-                    {/* Exemplo para o menu File */}
-                    {item === 'Go' && (
-                      <>
-                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
-                          New Window <MenubarShortcut>⌘N</MenubarShortcut>
-                        </MenubarItem>
-                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
-                          Open...
-                        </MenubarItem>
-                        <div className="border-t border-gray-300/30 my-1" />
-                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
-                          Close Window <MenubarShortcut>⌘W</MenubarShortcut>
-                        </MenubarItem>
-                      </>
-                    )}
-
-                    {/* Exemplo para o menu File */}
-                    {item === 'Window' && (
-                      <>
-                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
-                          New Window <MenubarShortcut>⌘N</MenubarShortcut>
-                        </MenubarItem>
-                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
-                          Open...
-                        </MenubarItem>
-                        <div className="border-t border-gray-300/30 my-1" />
-                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
-                          Close Window <MenubarShortcut>⌘W</MenubarShortcut>
-                        </MenubarItem>
-                      </>
-                    )}
-
-                    {/* Exemplo para o menu File */}
-                    {item === 'Help' && (
-                      <>
-                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
-                          New Window <MenubarShortcut>⌘N</MenubarShortcut>
-                        </MenubarItem>
-                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
-                          Open...
-                        </MenubarItem>
-                        <div className="border-t border-gray-300/30 my-1" />
-                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
-                          Close Window <MenubarShortcut>⌘W</MenubarShortcut>
-                        </MenubarItem>
-                      </>
-                    )}
-
-                    {/* Exemplo para o menu Edit */}
-                    {item === 'Edit' && (
-                      <>
-                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
-                          Undo <MenubarShortcut>⌘Z</MenubarShortcut>
-                        </MenubarItem>
-                        <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
-                          Redo <MenubarShortcut>⇧⌘Z</MenubarShortcut>
-                        </MenubarItem>
-                      </>
-                    )}
-
-                    {/* Adicione conteúdo para outros menus conforme necessário */}
-                  </MenubarContent>
-                </MenubarMenu>
-              ),
-            )}
+            {['Finder', 'File', 'Edit', 'View', 'Go', 'Window', 'Help'].map(item => (
+              <MenubarMenu key={item}>
+                <MenubarTrigger className="cursor-default text-[11px] sm:text-[18px] h-6 px-2 py-0.5 rounded data-[state=open]:bg-gray-200/50 hover:bg-gray-200/50">
+                  {item}
+                </MenubarTrigger>
+                <MenubarContent
+                  className="min-w-[180px] bg-white/20 text-white backdrop-blur-2xl border border-gray-300/30 rounded-md mt-1"
+                  align="start"
+                >
+                  {item === 'File' && (
+                    <>
+                      <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
+                        New Window <MenubarShortcut>⌘N</MenubarShortcut>
+                      </MenubarItem>
+                      <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
+                        Open...
+                      </MenubarItem>
+                      <div className="border-t border-gray-300/30 my-1" />
+                      <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
+                        Close Window <MenubarShortcut>⌘W</MenubarShortcut>
+                      </MenubarItem>
+                    </>
+                  )}
+                  {item === 'Finder' && (
+                    <>
+                      <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
+                        New Window <MenubarShortcut>⌘N</MenubarShortcut>
+                      </MenubarItem>
+                      <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
+                        Open...
+                      </MenubarItem>
+                      <div className="border-t border-gray-300/30 my-1" />
+                      <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
+                        Close Window <MenubarShortcut>⌘W</MenubarShortcut>
+                      </MenubarItem>
+                    </>
+                  )}
+                  {item === 'View' && (
+                    <>
+                      <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
+                        New Window <MenubarShortcut>⌘N</MenubarShortcut>
+                      </MenubarItem>
+                      <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
+                        Open...
+                      </MenubarItem>
+                      <div className="border-t border-gray-300/30 my-1" />
+                      <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
+                        Close Window <MenubarShortcut>⌘W</MenubarShortcut>
+                      </MenubarItem>
+                    </>
+                  )}
+                  {item === 'Go' && (
+                    <>
+                      <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
+                        New Window <MenubarShortcut>⌘N</MenubarShortcut>
+                      </MenubarItem>
+                      <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
+                        Open...
+                      </MenubarItem>
+                      <div className="border-t border-gray-300/30 my-1" />
+                      <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
+                        Close Window <MenubarShortcut>⌘W</MenubarShortcut>
+                      </MenubarItem>
+                    </>
+                  )}
+                  {item === 'Window' && (
+                    <>
+                      <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
+                        New Window <MenubarShortcut>⌘N</MenubarShortcut>
+                      </MenubarItem>
+                      <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
+                        Open...
+                      </MenubarItem>
+                      <div className="border-t border-gray-300/30 my-1" />
+                      <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
+                        Close Window <MenubarShortcut>⌘W</MenubarShortcut>
+                      </MenubarItem>
+                    </>
+                  )}
+                  {item === 'Help' && (
+                    <>
+                      <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
+                        New Window <MenubarShortcut>⌘N</MenubarShortcut>
+                      </MenubarItem>
+                      <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
+                        Open...
+                      </MenubarItem>
+                      <div className="border-t border-gray-300/30 my-1" />
+                      <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
+                        Close Window <MenubarShortcut>⌘W</MenubarShortcut>
+                      </MenubarItem>
+                    </>
+                  )}
+                  {item === 'Edit' && (
+                    <>
+                      <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
+                        Undo <MenubarShortcut>⌘Z</MenubarShortcut>
+                      </MenubarItem>
+                      <MenubarItem className="text-[11px] sm:text-[18px] h-7 focus:bg-gray-200/50">
+                        Redo <MenubarShortcut>⇧⌘Z</MenubarShortcut>
+                      </MenubarItem>
+                    </>
+                  )}
+                </MenubarContent>
+              </MenubarMenu>
+            ))}
           </Menubar>
         </div>
-
-        {/* Restante do header... */}
-        {/* Hora */}
         <div className="hidden sm:flex items-center space-x-4 text-[11px] sm:text-[18px] text-white">
           <span className="whitespace-nowrap">
             {currentTime.toLocaleDateString('en-US', { weekday: 'short' })}{' '}
@@ -202,43 +191,74 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Dock */}
+      {/* Janelas abertas (arrastáveis e redimensionáveis) */}
+      <div className="absolute top-16 left-10 z-50">
+        {openWindows.map((win, index) => (
+          <Rnd
+            key={win.key}
+            default={{
+              x: 50 + index * 20,
+              y: 50 + index * 20,
+              width: 600,
+              height: 400,
+            }}
+            bounds="window"
+            dragHandleClassName="drag-handle"
+            className="bg-white rounded-lg shadow-xl overflow-hidden mb-4"
+          >
+            {/* Header da janela com a área de arrasto */}
+            <div className="drag-handle bg-gray-200 flex items-center p-2 cursor-move">
+              <div className="flex space-x-2 ml-2">
+                <div
+                  className="w-3 h-3 bg-red-500 rounded-full cursor-pointer"
+                  onClick={() => closeWindow(win.key)}
+                ></div>
+                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+              </div>
+              <span className="ml-4 text-gray-700 font-semibold">{win.url}</span>
+            </div>
+            <iframe src={win.url} className="w-full h-full border-none" />
+          </Rnd>
+        ))}
+      </div>
+
+      {/* Dock com ícones para abrir sites internamente */}
       <Dock
         iconMagnification={72}
         iconDistance={120}
         direction="bottom"
         className="shadow-2xl z-20 px-2 sm:px-4"
       >
-        {' '}
         <DockIcon className="dock-icon">
-          <Link href="https://www.github.com" target="_blank">
+          <button onClick={() => openSite('https://www.github.com')}>
             <Icons.gitHub className="size-6 sm:size-8 text-white/90 hover:text-white transition-colors duration-100" />
-          </Link>
+          </button>
         </DockIcon>
         <DockIcon className="dock-icon">
-          <Link href="https://www.youtube.com" target="_blank">
+          <button onClick={() => openSite('https://www.youtube.com')}>
             <Icons.youtube className="size-6 sm:size-8 text-white/90 hover:text-white transition-colors" />
-          </Link>
+          </button>
         </DockIcon>
         <DockIcon className="dock-icon">
-          <Link href="https://drive.google.com/" target="_blank">
+          <button onClick={() => openSite('https://drive.google.com/')}>
             <Icons.googleDrive className="size-6 sm:size-8 text-white/90 hover:text-white transition-colors" />
-          </Link>
+          </button>
         </DockIcon>
         <DockIcon className="dock-icon">
-          <Link href="https://www.notion.so/" target="_blank">
+          <button onClick={() => openSite('https://www.notion.so/')}>
             <Icons.notion className="size-6 sm:size-8 text-white/90 hover:text-white transition-colors" />
-          </Link>
+          </button>
         </DockIcon>
         <DockIcon className="dock-icon">
-          <Link href="https://trello.com" target="_blank">
+          <button onClick={() => openSite('https://trello.com')}>
             <Icons.trello className="size-6 sm:size-8 text-white/90 hover:text-white transition-colors" />
-          </Link>
+          </button>
         </DockIcon>
         <DockIcon className="dock-icon">
-          <Link href="https://web.whatsapp.com/" target="_blank">
+          <button onClick={() => openSite('https://web.whatsapp.com/')}>
             <Icons.whatsapp className="size-6 sm:size-8 text-white/90 hover:text-white transition-colors" />
-          </Link>
+          </button>
         </DockIcon>
       </Dock>
     </div>
@@ -256,9 +276,7 @@ const Icons = {
   ),
   trello: (props: IconProps) => (
     <svg viewBox="0 0 448 512" {...props}>
-      {/* Caixa de fundo representando o board */}
       <rect x="16" y="16" width="416" height="480" rx="32" fill="#0079BF" />
-      {/* Cartões */}
       <rect x="48" y="96" width="128" height="320" rx="16" fill="#fff" />
       <rect x="272" y="160" width="128" height="224" rx="16" fill="#fff" />
     </svg>
@@ -274,13 +292,13 @@ const Icons = {
   notion: (props: IconProps) => (
     <svg width="100" height="100" viewBox="0 0 100 100" fill="none" {...props}>
       <path
-        d="M6.017 4.313l55.333 -4.087c6.797 -0.583 8.543 -0.19 12.817 2.917l17.663 12.443c2.913 2.14 3.883 2.723 3.883 5.053v68.243c0 4.277 -1.553 6.807 -6.99 7.193L24.467 99.967c-4.08 0.193 -6.023 -0.39 -8.16 -3.113L3.3 79.94c-2.333 -3.113 -3.3 -5.443 -3.3 -8.167V11.113c0 -3.497 1.553 -6.413 6.017 -6.8z"
+        d="M6.017 4.313l55.333-4.087c6.797-.583 8.543-.19 12.817 2.917l17.663 12.443c2.913 2.14 3.883 2.723 3.883 5.053v68.243c0 4.277-1.553 6.807-6.99 7.193L24.467 99.967c-4.08 0-6.023-.39-8.16-3.113L3.3 79.94c-2.333-3.113-3.3-5.443-3.3-8.167V11.113c0-3.497 1.553-6.413 6.017-6.8z"
         fill="#fff"
       />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
-        d="M61.35 0.227l-55.333 4.087C1.553 4.7 0 7.617 0 11.113v60.66c0 2.723 0.967 5.053 3.3 8.167l13.007 16.913c2.137 2.723 4.08 3.307 8.16 3.113l64.257 -3.89c5.433 -0.387 6.99 -2.917 6.99 -7.193V20.64c0 -2.21 -0.873 -2.847 -3.443 -4.733L74.167 3.143c-4.273 -3.107 -6.02 -3.5 -12.817 -2.917zM25.92 19.523c-5.247 0.353 -6.437 0.433 -9.417 -1.99L8.927 11.507c-0.77 -0.78 -0.383 -1.753 1.557 -1.947l53.193 -3.887c4.467 -0.39 6.793 1.167 8.54 2.527l9.123 6.61c0.39 0.197 1.36 1.36 0.193 1.36l-54.933 3.307 -0.68 0.047zM19.803 88.3V30.367c0 -2.53 0.777 -3.697 3.103 -3.893L86 22.78c2.14 -0.193 3.107 1.167 3.107 3.693v57.547c0 2.53 -0.39 4.67 -3.883 4.863l-60.377 3.5c-3.493 0.193 -5.043 -0.97 -5.043 -4.083zm59.6 -54.827c0.387 1.75 0 3.5 -1.75 3.7l-2.91 0.577v42.773c-2.527 1.36 -4.853 2.137 -6.797 2.137 -3.107 0 -3.883 -0.973 -6.21 -3.887l-19.03 -29.94v28.967l6.02 1.363s0 3.5 -4.857 3.5l-13.39 0.777c-0.39 -0.78 0 -2.723 1.357 -3.11l3.497 -0.97v-38.3L30.48 40.667c-0.39 -1.75 0.58 -4.277 3.3 -4.473l14.367 -0.967 19.8 30.327v-26.83l-5.047 -0.58c-0.39 -2.143 1.163 -3.7 3.103 -3.89l13.4 -0.78z"
+        d="M61.35 0.227l-55.333 4.087C1.553 4.7 0 7.617 0 11.113v60.66c0 2.723 0.967 5.053 3.3 8.167l13.007 16.913c2.137 2.723 4.08 3.307 8.16 3.113l64.257-3.89c5.433-.387 6.99-2.917 6.99-7.193V20.64c0-2.21-.873-2.847-3.443-4.733L74.167 3.143c-4.273-3.107-6.02-3.5-12.817-2.917zM25.92 19.523c-5.247 0.353-6.437 0.433-9.417-1.99L8.927 11.507c-0.77-.78-0.383-1.753 1.557-1.947l53.193-3.887c4.467-.39 6.793 1.167 8.54 2.527l9.123 6.61c0.39 0.197 1.36 1.36 0.193 1.36l-54.933 3.307-.68 0.047zM19.803 88.3V30.367c0-2.53.777-3.697 3.103-3.893L86 22.78c2.14-.193 3.107 1.167 3.107 3.693v57.547c0 2.53-.39 4.67-3.883 4.863l-60.377 3.5c-3.493.193-5.043-.97-5.043-4.083zm59.6-54.827c0.387 1.75 0 3.5-1.75 3.7l-2.91 0.577v42.773c-2.527 1.36-4.853 2.137-6.797 2.137-3.107 0-3.883-.973-6.21-3.887l-19.03-29.94v28.967l6.02 1.363s0 3.5-4.857 3.5l-13.39 0.777c-0.39-.78 0-2.723 1.357-3.11l3.497-.97v-38.3L30.48 40.667c-0.39-1.75.58-4.277 3.3-4.473l14.367-.967 19.8 30.327v-26.83l-5.047-.58c-0.39-2.143 1.163-3.7 3.103-3.89l13.4-.78z"
         fill="#000"
       />
     </svg>
@@ -292,7 +310,7 @@ const Icons = {
         fill="#0066da"
       />
       <path
-        d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0 -1.2 4.5h27.5z"
+        d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0-1.2 4.5h27.5z"
         fill="#00ac47"
       />
       <path
@@ -332,7 +350,7 @@ const Icons = {
       <path
         fill="#fff"
         d="m12.966 161.238 10.439-38.114a73.42 73.42 0 0 1-9.821-36.772c.017-40.556 33.021-73.55 73.578-73.55 19.681.01 38.154 7.669 52.047 21.572s21.537 32.383 21.53 52.037c-.018 40.553-33.027 73.553-73.578 73.553h-.032c-12.313-.005-24.412-3.094-35.159-8.954z"
-      />
+        />
       <path
         fill="url(#b)"
         d="M87.184 25.227c-33.733 0-61.166 27.423-61.178 61.13a60.98 60.98 0 0 0 9.349 32.535l1.455 2.313-6.179 22.558 23.146-6.069 2.235 1.324c9.387 5.571 20.15 8.517 31.126 8.523h.023c33.707 0 61.14-27.426 61.153-61.135a60.75 60.75 0 0 0-17.895-43.251 60.75 60.75 0 0 0-43.235-17.928z"
